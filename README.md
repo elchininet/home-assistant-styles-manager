@@ -43,7 +43,7 @@ new HomeAssistantStylesManager([options])
 | Parameter      | Optional      | Description                                         |
 | -------------- | ------------- | --------------------------------------------------- |
 | prefix         | yes           | prefix that will be used for the styles ids         |
-| delay          | yes           | namespace that will be used for the warnings        |
+| namespace      | yes           | namespace that will be used for the warnings        |
 
 ### Public methods
 
