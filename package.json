@@ -43,7 +43,7 @@
     "test:unit": "jest --clearCache && jest --verbose --coverage",
     "test:all": "pnpm test:ts && pnpm test:lint && pnpm test:unit",
     "prepare": "pnpm build",
-    "prepublishOnly": "pnpm lint && pnpm test:ts && pnpm test:ci",
+    "prepublishOnly": "pnpm test:all",
     "version": "git add .",
     "postversion": "git push && git push --tags"
   },
