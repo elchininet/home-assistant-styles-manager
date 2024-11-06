@@ -1,6 +1,6 @@
 {
   "name": "home-assistant-styles-manager",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Manage Home Assistant styles per DOM elements",
   "keywords": [
     "css",
