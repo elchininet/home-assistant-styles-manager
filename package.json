@@ -1,0 +1,66 @@
+{
+  "name": "home-assistant-styles-manager",
+  "version": "1.0.0",
+  "description": "Manage Home Assistant styles per DOM elements",
+  "keywords": [
+    "css",
+    "styles",
+    "home-assistant",
+    "shadow-dom",
+    "shadow-root",
+    "javascript-library",
+    "library"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "author": "ElChiniNet",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elchininet/home-assistant-styles-manager"
+  },
+  "scripts": {
+    "build": "pnpm clean && rollup --config rollup.config.js --bundleConfigAsCjs",
+    "clean": "rm -rf dist",
+    "test:ts": "tsc --noEmit",
+    "test:lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "test:unit": "jest --clearCache && jest --verbose --coverage",
+    "test:all": "pnpm test:ts && pnpm test:lint && pnpm test:unit",
+    "prepare": "pnpm build",
+    "prepublishOnly": "pnpm lint && pnpm test:ts && pnpm test:ci",
+    "version": "git add .",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/eslint": "^9.6.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.5.4",
+    "eslint": "^9.10.0",
+    "eslint-plugin-jest": "^28.8.3",
+    "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "rollup": "4.21.2",
+    "rollup-plugin-ts": "^3.4.5",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.4.0"
+  }
+}
