@@ -22,7 +22,16 @@ const toKebabCase = (value: string): string => {
     });
 };
 
-// Convert a CSS in JS to string
+const flatCSSInJsArray = (cssRulesInJsArray: CSSInJs[]): CSSInJs => {
+    return cssRulesInJsArray.reduce((flatRules: CSSInJs, rules: CSSInJs): CSSInJs => {
+        flatRules = {
+            ...flatRules,
+            ...rules
+        };
+        return flatRules;
+    }, {});
+};
+
 export const getCSSString = (cssInJs: DeclarationTree): string => {
     return Object.entries(cssInJs)
         .map((entry: [string, string]): string => {
@@ -32,9 +41,11 @@ export const getCSSString = (cssInJs: DeclarationTree): string => {
         .join(';') + ';';
 };
 
-// Convert a CSS rules object to string
-export const getCSSRulesString = (cssRulesInJs: CSSInJs): string => {
-    return Object.entries(cssRulesInJs)
+export const getCSSRulesString = (cssRulesInJs: CSSInJs | CSSInJs[]): string => {
+    const rules = Array.isArray(cssRulesInJs)
+        ? flatCSSInJsArray(cssRulesInJs)
+        : cssRulesInJs;
+    return Object.entries(rules)
         .map((entry: [string, DeclarationTree | false]): string => {
             const [rule, value] = entry;
             if (value === false) {
@@ -68,7 +79,7 @@ export const getStyleElement = (
 };
 
 export const addStyle = (
-    css: string | CSSInJs,
+    css: string | CSSInJs | CSSInJs[],
     root: RootElement | null,
     prefix: string,
     namespace: string

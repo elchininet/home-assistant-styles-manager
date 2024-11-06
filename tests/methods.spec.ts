@@ -155,6 +155,25 @@ describe('HomeAssistantStylesManager methods', () => {
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.my-element > .child {display: none !important;}');
         });
 
+        it('should update the style element if a new CSS array object is sent to a regular HTMLElement', () => {
+            styleManager.addStyle(
+                [
+                    {
+                        '.my-element': {
+                            background: 'green'
+                        },
+                    },
+                    {
+                        '.my-element > .child': false
+                    }
+                ],
+                myElement
+            );
+            const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_div');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.my-element {background: green;}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.my-element > .child {display: none !important;}');
+        });
+
         it('should update the style element if a new CSS string is sent to a custom element', () => {
             styleManager.addStyle(
                 `my-custom-element {
@@ -174,6 +193,25 @@ describe('HomeAssistantStylesManager methods', () => {
                     },
                     'my-custom-element + div': false
                 },
+                myCustomElement
+            );
+            const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('my-custom-element {background-color: gray;}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('my-custom-element + div {display: none !important;}');
+        });
+
+        it('should update the style element if a new CSS array object is sent to a custom element', () => {
+            styleManager.addStyle(
+                [
+                    {
+                        'my-custom-element': {
+                            'background-color': 'gray'
+                        }
+                    },
+                    {
+                        'my-custom-element + div': false
+                    }
+                ],
                 myCustomElement
             );
             const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
@@ -201,6 +239,26 @@ describe('HomeAssistantStylesManager methods', () => {
                     },
                     '.custom-li::after': false
                 },
+                myCustomElement?.shadowRoot
+            );
+            const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {text-align: right; --webkit-text-fill-color: red;}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.custom-li::after {display: none !important;}');
+        });
+
+        it('should update the style element if a new CSS array object is sent to a custom element shadowRoot', () => {
+            styleManager.addStyle(
+                [
+                    {
+                        '.custom-li': {
+                            textAlign: 'right',
+                            WebkitTextFillColor: 'red'
+                        }
+                    },
+                    {
+                        '.custom-li::after': false
+                    }
+                ],
                 myCustomElement?.shadowRoot
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
