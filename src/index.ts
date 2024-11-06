@@ -39,3 +39,4 @@ export class HomeAssistantStylesManager {
 }
 
 export type { RootElement, CSSInJs };
+export { getCSSRulesString, getCSSString } from '@utilities';

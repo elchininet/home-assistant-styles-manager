@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.1] - 2024-11-07
+
+- Export the `getCSSRulesString` and `getCSSString` utilities
+
 ## [1.1.0] - 2024-11-07
 
 - The method `addStyle` now also accepts an array of CSS-in-JS objects
