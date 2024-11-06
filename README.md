@@ -61,9 +61,35 @@ Given a CSS string or a CSS object and an `HTMLElement` or a `ShadowRoot` elemen
 
 ```typescript
 addStyle(
-  css: string | Record<string, Record<string, string> | false>,
+  css: | CSSInJs | CSSInJs[],
   root: HTMLElement | ShadowRoot
 ): void
+```
+
+The `css` property can be a CSS string but also a CSS-in-JS object or an array of CSS-in-JS objects. Any rule with a `false` value will be get hidden.
+
+For eaxample, the next CSS-in-JS object:
+
+```javascript
+{
+  '.some-rule': {
+    backgroundColor: 'red',
+    SomeVariable: '10px'
+  },
+  '.hide-rule': false
+}
+```
+
+Will be compiled to:
+
+```css
+.some-rule {
+  background-color: red;
+  --some-variable: 10px;
+}
+.hide-rule {
+  display: none !important;
+}
 ```
 
 #### removeStyle

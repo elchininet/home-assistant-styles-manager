@@ -20,7 +20,7 @@ export class HomeAssistantStylesManager {
         return utilities.getStyleElement(root, this._prefix);
     }
 
-    public addStyle(css: string | CSSInJs, root: RootElement): void {
+    public addStyle(css: string | CSSInJs | CSSInJs[], root: RootElement): void {
         utilities.addStyle(
             css,
             root,
