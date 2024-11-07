@@ -5,4 +5,5 @@ export type CSSInJs = Record<string, DeclarationTree | boolean>;
 export interface Options {
     prefix?: string;
     namespace?: string;
+    throwWarnings?: boolean;
 }

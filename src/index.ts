@@ -11,10 +11,12 @@ export class HomeAssistantStylesManager {
     constructor(options: Options = {}) {
         this._prefix = options.prefix ?? PREFIX;
         this._namespace = options.namespace ?? NAMESPACE;
+        this._throwWarnings = options.throwWarnings ?? true;
     }
 
     private _prefix: string;
     private _namespace: string;
+    private _throwWarnings: boolean;
     
     public getStyleElement(root: RootElement): HTMLStyleElement | null {
         return utilities.getStyleElement(root, this._prefix);
@@ -25,7 +27,8 @@ export class HomeAssistantStylesManager {
             css,
             root,
             this._prefix,
-            this._namespace
+            this._namespace,
+            this._throwWarnings
         );
     }
 
@@ -33,7 +36,8 @@ export class HomeAssistantStylesManager {
         utilities.removeStyle(
             root,
             this._prefix,
-            this._namespace
+            this._namespace,
+            this._throwWarnings
         );
     }
 }
