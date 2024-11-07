@@ -273,7 +273,7 @@ describe('HomeAssistantStylesManager methods', () => {
                 document.querySelector('.non-existent')
             );
 
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided in "addStyle"');
+            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided calling "addStyle"');
 
         });
 
@@ -337,7 +337,7 @@ describe('HomeAssistantStylesManager methods', () => {
                 document.querySelector('.non-existent')
             );
 
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided in "removeStyle"');
+            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided calling "removeStyle"');
 
         });
 

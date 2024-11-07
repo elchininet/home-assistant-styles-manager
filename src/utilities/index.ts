@@ -82,7 +82,8 @@ export const addStyle = (
     css: string | CSSInJs | CSSInJs[],
     root: RootElement | null,
     prefix: string,
-    namespace: string
+    namespace: string,
+    throwWarnings: boolean
 ): void => {
     if (root) {
         let style = getStyleElement(root, prefix);
@@ -98,22 +99,25 @@ export const addStyle = (
         style.innerHTML = typeof css === 'string'
             ? css
             : getCSSRulesString(css);
-    } else {
-        console.warn(`${namespace}: no element has been provided in "addStyle"`);
+    } else if (throwWarnings) {
+        console.warn(`${namespace}: no element has been provided calling "addStyle"`);
     }
 };
 
 export const removeStyle = (
     root: RootElement | null,
     prefix: string,
-    namespace: string
+    namespace: string,
+    throwWarnings: boolean
 ): void => {
     if (root) {
         const style = getStyleElement(root, prefix);
         if (style) {
             style.remove();
+        } else if (throwWarnings) {
+            console.warn(`${namespace}: no style to remove calling "removeStyle"`);
         }
-    } else {
-        console.warn(`${namespace}: no element has been provided in "removeStyle"`);
+    } else if (throwWarnings) {
+        console.warn(`${namespace}: no element has been provided calling "removeStyle"`);
     }
 };

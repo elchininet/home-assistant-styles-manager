@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.0.0] - 2024-11-07
+
+- New option to avoid throwing warnings
+- Restore the warning when a style element is not present in the `removeStyle` method
+
 ## [2.0.0] - 2024-11-07
 
 - Do not throw warnings if the element doesn't have a style element in the `removeStyle` method
