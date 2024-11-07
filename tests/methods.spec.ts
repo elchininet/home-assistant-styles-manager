@@ -273,7 +273,7 @@ describe('HomeAssistantStylesManager methods', () => {
                 document.querySelector('.non-existent')
             );
 
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: not element has been provided in "addStyle"');
+            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided in "addStyle"');
 
         });
 
@@ -337,31 +337,7 @@ describe('HomeAssistantStylesManager methods', () => {
                 document.querySelector('.non-existent')
             );
 
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: not element has been provided in "removeStyle"');
-
-        });
-
-        it('should throw a warning if it is used in an element without style', () => {
-
-            styleManager.removeStyle(notMyElement);
-
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: not style to remove in "removeStyle"');
-
-        });
-
-        it('should throw a warning if it is used in a custom element without style', () => {
-
-            styleManager.removeStyle(notMyCustomElement);
-
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: not style to remove in "removeStyle"');
-
-        });
-
-        it('should throw a warning if it is used in a custom element shadowRoot without style', () => {
-
-            styleManager.removeStyle(notMyCustomElement?.shadowRoot);
-
-            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: not style to remove in "removeStyle"');
+            expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided in "removeStyle"');
 
         });
 

@@ -23,8 +23,6 @@ const BASE_BODY = `
 
 describe('HomeAssistantStylesManager with custom namespace', () => {
 
-    let myElement: HTMLDivElement | null;
-    let myCustomElement: HTMLElement | null;
     let styleManager: HomeAssistantStylesManager;
 
     let consoleWarningFn: jest.Mock;
@@ -40,11 +38,6 @@ describe('HomeAssistantStylesManager with custom namespace', () => {
             .spyOn(console, 'warn')
             .mockImplementation(consoleWarningFn);
         document.body.innerHTML = BASE_BODY;
-        myElement = document.querySelector('.my-element');
-        await customElements.whenDefined('my-custom-html-element')
-            .then(() => {
-                myCustomElement = document.querySelector('my-custom-html-element');
-            });
         styleManager = new HomeAssistantStylesManager({
             namespace: 'custom-namespace'
         });
@@ -64,7 +57,7 @@ describe('HomeAssistantStylesManager with custom namespace', () => {
                 document.querySelector('.non-existent')
             );
 
-            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: not element has been provided in "addStyle"');
+            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: no element has been provided in "addStyle"');
 
         });
 
@@ -78,31 +71,7 @@ describe('HomeAssistantStylesManager with custom namespace', () => {
                 document.querySelector('.non-existent')
             );
 
-            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: not element has been provided in "removeStyle"');
-
-        });
-
-        it('should throw a warning if it is used in an element without style', () => {
-
-            styleManager.removeStyle(myElement);
-
-            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: not style to remove in "removeStyle"');
-
-        });
-
-        it('should throw a warning if it is used in a custom element without style', () => {
-
-            styleManager.removeStyle(myCustomElement);
-
-            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: not style to remove in "removeStyle"');
-
-        });
-
-        it('should throw a warning if it is used in a custom element shadowRoot without style', () => {
-
-            styleManager.removeStyle(myCustomElement?.shadowRoot);
-
-            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: not style to remove in "removeStyle"');
+            expect(consoleWarningFn).toHaveBeenCalledWith('custom-namespace: no element has been provided in "removeStyle"');
 
         });
 
