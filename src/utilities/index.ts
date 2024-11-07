@@ -99,7 +99,7 @@ export const addStyle = (
             ? css
             : getCSSRulesString(css);
     } else {
-        console.warn(`${namespace}: not element has been provided in "addStyle"`);
+        console.warn(`${namespace}: no element has been provided in "addStyle"`);
     }
 };
 
@@ -112,10 +112,8 @@ export const removeStyle = (
         const style = getStyleElement(root, prefix);
         if (style) {
             style.remove();
-        } else {
-            console.warn(`${namespace}: not style to remove in "removeStyle"`);
         }
     } else {
-        console.warn(`${namespace}: not element has been provided in "removeStyle"`);
+        console.warn(`${namespace}: no element has been provided in "removeStyle"`);
     }
 };

@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.0] - 2024-11-07
+
+- Do not throw warnings if the element doesn't have a style element in the `removeStyle` method
+
 ## [1.1.1] - 2024-11-07
 
 - Export the `getCSSRulesString` and `getCSSString` utilities
