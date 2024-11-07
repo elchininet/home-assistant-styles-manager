@@ -40,10 +40,11 @@ new HomeAssistantStylesManager([options])
 
 #### Options object
 
-| Parameter      | Optional      | Description                                         |
-| -------------- | ------------- | --------------------------------------------------- |
-| prefix         | yes           | prefix that will be used for the styles ids         |
-| namespace      | yes           | namespace that will be used for the warnings        |
+| Parameter      | Optional      | Default                         | Description                                         |
+| -------------- | ------------- | ------------------------------- | --------------------------------------------------- |
+| prefix         | yes           | `ha-styles-manager`             | prefix that will be used for the styles ids         |
+| namespace      | yes           | `home-assistant-styles-manager` | namespace that will be used for the warnings        |
+| throwWarnings  | yes           | true                            | indicates if the library should throw warnings      |
 
 ### Public methods
 
@@ -61,12 +62,12 @@ Given a CSS string or a CSS object and an `HTMLElement` or a `ShadowRoot` elemen
 
 ```typescript
 addStyle(
-  css: | CSSInJs | CSSInJs[],
+  css: string | CSSInJs | CSSInJs[],
   root: HTMLElement | ShadowRoot
 ): void
 ```
 
-The `css` property can be a CSS string but also a CSS-in-JS object or an array of CSS-in-JS objects. Any rule with a `false` value will be get hidden.
+The `css` property can be a CSS string but also a CSS-in-JS object or an array of CSS-in-JS objects. Any rule with a `false` value will get hidden.
 
 For eaxample, the next CSS-in-JS object:
 
