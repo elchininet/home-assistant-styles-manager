@@ -62,12 +62,12 @@ Given a CSS string or a CSS object and an `HTMLElement` or a `ShadowRoot` elemen
 
 ```typescript
 addStyle(
-  css: string | CSSInJs | CSSInJs[],
+  css: string | CSSInJs | (string | CSSInJs)[],
   root: HTMLElement | ShadowRoot
 ): void
 ```
 
-The `css` property can be a CSS string but also a CSS-in-JS object or an array of CSS-in-JS objects. Any rule with a `false` value will get hidden.
+The `css` property can be a CSS string but also a CSS-in-JS object or an array of CSS-in-JS objects and strings. Any rule with a `false` value will get hidden.
 
 For eaxample, the next CSS-in-JS object:
 
