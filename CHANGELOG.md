@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.1.0] - 2024-11-24
+
+- Allow to send an array of CSS in JS objects and strings
+
 ## [3.0.0] - 2024-11-07
 
 - New option to avoid throwing warnings

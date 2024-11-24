@@ -165,13 +165,15 @@ describe('HomeAssistantStylesManager methods', () => {
                     },
                     {
                         '.my-element > .child': false
-                    }
+                    },
+                    '.my-element > .child::after {content: "";}'
                 ],
                 myElement
             );
             const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_div');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.my-element {background: green;}');
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.my-element > .child {display: none !important;}');
+            expect(styleElement?.sheet?.cssRules[2].cssText).toBe('.my-element > .child::after {content: "";}');
         });
 
         it('should update the style element if a new CSS string is sent to a custom element', () => {

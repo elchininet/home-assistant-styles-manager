@@ -22,16 +22,6 @@ const toKebabCase = (value: string): string => {
     });
 };
 
-const flatCSSInJsArray = (cssRulesInJsArray: CSSInJs[]): CSSInJs => {
-    return cssRulesInJsArray.reduce((flatRules: CSSInJs, rules: CSSInJs): CSSInJs => {
-        flatRules = {
-            ...flatRules,
-            ...rules
-        };
-        return flatRules;
-    }, {});
-};
-
 export const getCSSString = (cssInJs: DeclarationTree): string => {
     return Object.entries(cssInJs)
         .map((entry: [string, string]): string => {
@@ -41,18 +31,25 @@ export const getCSSString = (cssInJs: DeclarationTree): string => {
         .join(';') + ';';
 };
 
-export const getCSSRulesString = (cssRulesInJs: CSSInJs | CSSInJs[]): string => {
-    const rules = Array.isArray(cssRulesInJs)
-        ? flatCSSInJsArray(cssRulesInJs)
-        : cssRulesInJs;
-    return Object.entries(rules)
-        .map((entry: [string, DeclarationTree | false]): string => {
+export const getCSSRulesString = (cssRulesInJs: CSSInJs | (string | CSSInJs)[]): string => {
+    const cssInJsArray = Array.isArray(cssRulesInJs)
+        ? cssRulesInJs
+        : [ cssRulesInJs ];
+
+    const cssArray = cssInJsArray.map((item: string | CSSInJs): string => {
+        if (typeof item === 'string') {
+            return item;
+        }
+        return Object.entries(item).map((entry: [string, DeclarationTree | false]): string => {
             const [rule, value] = entry;
             if (value === false) {
                 return `${rule}{display: none !important}`;
             }
             return `${rule}{${getCSSString(value)}}`;
         }).join('');
+    });
+
+    return cssArray.join('');
 };
 
 const getStyleElementId = (
@@ -79,7 +76,7 @@ export const getStyleElement = (
 };
 
 export const addStyle = (
-    css: string | CSSInJs | CSSInJs[],
+    css: string | CSSInJs | (string | CSSInJs)[],
     root: RootElement | null,
     prefix: string,
     namespace: string,
