@@ -48,6 +48,7 @@
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/eslint": "^9.6.1",
     "@types/jest": "^30.0.0",
