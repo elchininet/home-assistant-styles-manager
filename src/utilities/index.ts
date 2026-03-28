@@ -1,8 +1,4 @@
-import {
-    RootElement,
-    DeclarationTree,
-    CSSInJs
-} from '@types';
+import { RootElement, CSSInJs } from '@types';
 import { KEBAB_CASE_REGEXP } from '@constants';
 
 
@@ -22,31 +18,33 @@ const toKebabCase = (value: string): string => {
     });
 };
 
-export const getCSSString = (cssInJs: DeclarationTree): string => {
-    return Object.entries(cssInJs)
-        .map((entry: [string, string]): string => {
-            const [decl, value] = entry;
-            return `${toKebabCase(decl)}:${value}`;
-        })
-        .join(';') + ';';
-};
-
 export const getCSSRulesString = (cssRulesInJs: CSSInJs | (string | CSSInJs)[]): string => {
     const cssInJsArray = Array.isArray(cssRulesInJs)
         ? cssRulesInJs
         : [ cssRulesInJs ];
 
     const cssArray = cssInJsArray.map((item: string | CSSInJs): string => {
+
         if (typeof item === 'string') {
             return item;
         }
-        return Object.entries(item).map((entry: [string, DeclarationTree | false]): string => {
-            const [rule, value] = entry;
-            if (value === false) {
-                return `${rule}{display: none !important}`;
+
+        const entries = Object.entries(item);
+        const rules: string[] = [];
+        const declarations: string[] = [];
+
+        entries.forEach((entry: [string, string | number | boolean | CSSInJs]): void => {
+            const [prop, value] = entry;
+            if (typeof value === 'object') {
+                rules.push(`${prop}{${getCSSRulesString(value)}}`);
+            } else if (value === false) {
+                declarations.push(`${toKebabCase(prop)}{display: none !important}`);
+            } else {
+                declarations.push(`${toKebabCase(prop)}:${value}`);
             }
-            return `${rule}{${getCSSString(value)}}`;
-        }).join('');
+        });
+
+        return `${rules.join('')}${declarations.join(';')}`;
     });
 
     return cssArray.join('');

@@ -44,10 +44,4 @@ export class HomeAssistantStylesManager {
 
 export type { RootElement, CSSInJs };
 
-// These utilities are already tested
-export {
-    /* istanbul ignore next */
-    getCSSRulesString,
-    /* istanbul ignore next */
-    getCSSString
-} from '@utilities';
+export { getCSSRulesString } from '@utilities';
