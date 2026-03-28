@@ -1,6 +1,8 @@
 export type RootElement = Element | ShadowRoot;
-export type DeclarationTree = Record<string, string | number>;
-export type CSSInJs = Record<string, DeclarationTree | boolean>;
+
+export type CSSInJs = {
+    [key: string]: string | number | boolean | CSSInJs;
+};
 
 export interface Options {
     prefix?: string;

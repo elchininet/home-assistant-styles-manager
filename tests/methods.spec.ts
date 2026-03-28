@@ -144,15 +144,37 @@ describe('HomeAssistantStylesManager methods', () => {
             styleManager.addStyle(
                 {
                     '.my-element': {
-                        background: 'green'
+                        background: 'green',
+                        opacity: 0.5
                     },
                     '.my-element > .child': false
                 },
                 myElement
             );
             const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_div');
-            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.my-element {background: green;}');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.my-element {background: green; opacity: 0.5;}');
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.my-element > .child {display: none !important;}');
+        });
+
+        it('should update the style element if a new nested CSS object is sent to a regular HTMLElement', () => {
+            styleManager.addStyle(
+                {
+                    '@media screen and (width >= 900px)': {
+                        '.my-element': {
+                            background: 'green',
+                            opacity: 0.5
+                        }
+                        
+                    },
+                    '@media (hover: hover)': {
+                        '.my-element > .child': false
+                    }
+                },
+                myElement
+            );
+            const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_div');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen and (width >= 900px) {.my-element {background: green; opacity: 0.5;}}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('@media (hover: hover) {.my-element > .child {display: none !important;}}');
         });
 
         it('should update the style element if a new CSS array object is sent to a regular HTMLElement', () => {
@@ -161,7 +183,7 @@ describe('HomeAssistantStylesManager methods', () => {
                     {
                         '.my-element': {
                             background: 'green'
-                        },
+                        }
                     },
                     {
                         '.my-element > .child': false
@@ -174,6 +196,31 @@ describe('HomeAssistantStylesManager methods', () => {
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.my-element {background: green;}');
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.my-element > .child {display: none !important;}');
             expect(styleElement?.sheet?.cssRules[2].cssText).toBe('.my-element > .child::after {content: "";}');
+        });
+
+        it('should update the style element if a new nested CSS array object is sent to a regular HTMLElement', () => {
+            styleManager.addStyle(
+                [
+                    {
+                        '@media screen and (width < 300px)': {
+                            '.my-element': {
+                                background: 'green'
+                            }
+                        }
+                    },
+                    {
+                        '@media (hover: hover)': {
+                            '.my-element > .child': false
+                        }
+                    },
+                    '@supports (display: flex) {.my-element > .child::after {display: flex;}}'
+                ],
+                myElement
+            );
+            const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_div');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen and (width < 300px) {.my-element {background: green;}}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('@media (hover: hover) {.my-element > .child {display: none !important;}}');
+            expect(styleElement?.sheet?.cssRules[2].cssText).toBe('@supports (display: flex) {.my-element > .child::after {display: flex;}}');
         });
 
         it('should update the style element if a new CSS string is sent to a custom element', () => {
@@ -202,6 +249,25 @@ describe('HomeAssistantStylesManager methods', () => {
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('my-custom-element + div {display: none !important;}');
         });
 
+        it('should update the style element if a new nested CSS object is sent to a custom element', () => {
+            styleManager.addStyle(
+                {
+                    '@media print': {
+                        'my-custom-element': {
+                            'background-color': 'gray'
+                        }
+                    },
+                    '@media screen, print': {
+                        'my-custom-element + div': false
+                    }
+                },
+                myCustomElement
+            );
+            const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media print {my-custom-element {background-color: gray;}}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('@media screen, print {my-custom-element + div {display: none !important;}}');
+        });
+
         it('should update the style element if a new CSS array object is sent to a custom element', () => {
             styleManager.addStyle(
                 [
@@ -219,6 +285,29 @@ describe('HomeAssistantStylesManager methods', () => {
             const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('my-custom-element {background-color: gray;}');
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('my-custom-element + div {display: none !important;}');
+        });
+
+        it('should update the style element if a new nested CSS array object is sent to a custom element', () => {
+            styleManager.addStyle(
+                [
+                    {
+                        '@media screen': {
+                            'my-custom-element': {
+                                'background-color': 'gray'
+                            }
+                        }
+                    },
+                    {
+                        '@media (height > 600px)': {
+                            'my-custom-element + div': false
+                        }
+                    }
+                ],
+                myCustomElement
+            );
+            const styleElement = document.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen {my-custom-element {background-color: gray;}}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('@media (height > 600px) {my-custom-element + div {display: none !important;}}');
         });
 
         it('should update the style element if a new CSS string is sent to a custom element shadowRoot', () => {
@@ -248,6 +337,30 @@ describe('HomeAssistantStylesManager methods', () => {
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.custom-li::after {display: none !important;}');
         });
 
+        it('should update the style element if a new nested CSS object is sent to a custom element shadowRoot', () => {
+            styleManager.addStyle(
+                {
+                    '@media screen and (width >= 900px)': {
+                        '.custom-li': {
+                            textAlign: 'right',
+                            WebkitTextFillColor: 'red'
+                        },
+                    },
+                    '@supports (display: flex)': {
+                        '@media screen and (width >= 900px)': {
+                            '.custom-li::after': {
+                                display: 'flex'
+                            }
+                        }
+                    }
+                },
+                myCustomElement?.shadowRoot
+            );
+            const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen and (width >= 900px) {.custom-li {text-align: right; --webkit-text-fill-color: red;}}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('@supports (display: flex) {@media screen and (width >= 900px) {.custom-li::after {display: flex;}}}');
+        });
+
         it('should update the style element if a new CSS array object is sent to a custom element shadowRoot', () => {
             styleManager.addStyle(
                 [
@@ -266,6 +379,34 @@ describe('HomeAssistantStylesManager methods', () => {
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {text-align: right; --webkit-text-fill-color: red;}');
             expect(styleElement?.sheet?.cssRules[1].cssText).toBe('.custom-li::after {display: none !important;}');
+        });
+
+        it('should update the style element if a new CSS nested array object is sent to a custom element shadowRoot', () => {
+            styleManager.addStyle(
+                [
+                    {
+                        '@media screen and (width >= 900px)': {
+                            '.custom-li': {
+                                textAlign: 'right',
+                                WebkitTextFillColor: 'red'
+                            }
+                        }
+                    },
+                    {
+                        '@supports (display: flex)': {
+                            '@media screen and (width >= 900px)': {
+                                '.custom-li::after': {
+                                    display: 'flex'
+                                }
+                            }
+                        }
+                    }
+                ],
+                myCustomElement?.shadowRoot
+            );
+            const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
+            expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen and (width >= 900px) {.custom-li {text-align: right; --webkit-text-fill-color: red;}}');
+            expect(styleElement?.sheet?.cssRules[1].cssText).toBe('@supports (display: flex) {@media screen and (width >= 900px) {.custom-li::after {display: flex;}}}');
         });
 
         it('should throw a warning if it is used with a non-existent element', () => {

@@ -77,7 +77,15 @@ For eaxample, the next CSS-in-JS object:
     backgroundColor: 'red',
     SomeVariable: '10px'
   },
-  '.hide-rule': false
+  '.hide-rule': false,
+  '@supports (display: flex)': {
+    '@media screen and (width >= 900px)': {
+      'nested-rule': {
+        SomeVariable: '20px',
+        display: 'flex'
+      }
+    }
+  }
 }
 ```
 
@@ -86,10 +94,18 @@ Will be compiled to:
 ```css
 .some-rule {
   background-color: red;
-  --some-variable: 10px;
+  --some-variable: 10px
 }
 .hide-rule {
-  display: none !important;
+  display: none !important
+}
+@supports (display: flex) {
+  @media screen and (width >= 900px) {
+    nested-rule {
+      --some-variable: 20px;
+      display: flex
+    }
+  }
 }
 ```
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.0] - 2026-03-28
+
+- `getCSSString` has been removed because it was redundant, `getCSSRulesString` can parse both, `CSS-in-JS` objects and regular rule objects
+- Add support for nested `CSS`, useful for nested rules or media-queries
+
 ## [3.1.0] - 2024-11-24
 
 - Allow to send an array of CSS in JS objects and strings
