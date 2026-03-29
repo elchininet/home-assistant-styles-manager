@@ -54,7 +54,7 @@ describe('HomeAssistantStylesManager no warnings', () => {
 
             styleManager.addStyle(
                 '.custom { display: none }',
-                document.querySelector('.non-existent')
+                document.querySelector('.non-existent')!
             );
 
             expect(consoleWarningFn).not.toHaveBeenCalled();
@@ -68,7 +68,7 @@ describe('HomeAssistantStylesManager no warnings', () => {
         it('should not throw a warning if it is used with a non-existent element', () => {
 
             styleManager.removeStyle(
-                document.querySelector('.non-existent')
+                document.querySelector('.non-existent')!
             );
 
             expect(consoleWarningFn).not.toHaveBeenCalled();
@@ -78,7 +78,7 @@ describe('HomeAssistantStylesManager no warnings', () => {
         it('should not throw a warning if it is used with no style element', () => {
 
             styleManager.removeStyle(
-                document.querySelector('.my-element')
+                document.querySelector('.my-element')!
             );
 
             expect(consoleWarningFn).not.toHaveBeenCalled();

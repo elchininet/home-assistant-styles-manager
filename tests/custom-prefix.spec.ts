@@ -23,8 +23,8 @@ const BASE_BODY = `
 
 describe('HomeAssistantStylesManager with custom prefix', () => {
 
-    let myElement: HTMLDivElement | null;
-    let myCustomElement: HTMLElement | null;
+    let myElement: HTMLDivElement;
+    let myCustomElement: HTMLElement;
     let styleManager: HomeAssistantStylesManager;
 
     beforeAll(() => {
@@ -33,10 +33,10 @@ describe('HomeAssistantStylesManager with custom prefix', () => {
 
     beforeEach(async () => {
         document.body.innerHTML = BASE_BODY;
-        myElement = document.querySelector('.my-element');
+        myElement = document.querySelector('.my-element')!;
         await customElements.whenDefined('my-custom-html-element')
             .then(() => {
-                myCustomElement = document.querySelector('my-custom-html-element');
+                myCustomElement = document.querySelector('my-custom-html-element')!;
             });
         styleManager = new HomeAssistantStylesManager({
             prefix: 'custom-prefix'
@@ -57,7 +57,7 @@ describe('HomeAssistantStylesManager with custom prefix', () => {
             `.custom-li {
                 background: blue;
             }`,
-            myCustomElement?.shadowRoot
+            myCustomElement.shadowRoot!
         );
     });
 
@@ -145,7 +145,7 @@ describe('HomeAssistantStylesManager with custom prefix', () => {
                 `.custom-li {
                     background: purple;
                 }`,
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#custom-prefix_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {background: purple;}');
@@ -160,7 +160,7 @@ describe('HomeAssistantStylesManager with custom prefix', () => {
                     },
                     '.custom-li::after': false
                 },
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#custom-prefix_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {text-align: right; --webkit-text-fill-color: red;}');
@@ -183,8 +183,8 @@ describe('HomeAssistantStylesManager with custom prefix', () => {
 
         it('should return the correct element from a custom element shadowRoot', () => {
             const styleElement = myCustomElement?.shadowRoot?.querySelector('#custom-prefix_my-custom-html-element');
-            expect(styleManager.getStyleElement(myCustomElement?.shadowRoot)).toBeDefined();
-            expect(styleManager.getStyleElement(myCustomElement?.shadowRoot)).toBe(styleElement);
+            expect(styleManager.getStyleElement(myCustomElement.shadowRoot!)).toBeDefined();
+            expect(styleManager.getStyleElement(myCustomElement.shadowRoot!)).toBe(styleElement);
         });
 
     });
@@ -204,8 +204,8 @@ describe('HomeAssistantStylesManager with custom prefix', () => {
         });
 
         it('should remove the style from a custom element shadowRoot', () => {
-            styleManager.removeStyle(myCustomElement?.shadowRoot);
-            const styleElement = myCustomElement?.shadowRoot?.querySelector('#custom-prefix_my-custom-html-element');
+            styleManager.removeStyle(myCustomElement.shadowRoot!);
+            const styleElement = myCustomElement.shadowRoot!.querySelector('#custom-prefix_my-custom-html-element');
             expect(styleElement).toBeNull();
         });
 
