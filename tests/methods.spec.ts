@@ -50,10 +50,10 @@ const BASE_BODY = `
 
 describe('HomeAssistantStylesManager methods', () => {
 
-    let myElement: HTMLDivElement | null;
-    let notMyElement: HTMLDivElement | null;
-    let myCustomElement: HTMLElement | null;
-    let notMyCustomElement: HTMLElement | null;
+    let myElement: HTMLDivElement;
+    let notMyElement: HTMLDivElement;
+    let myCustomElement: HTMLElement;
+    let notMyCustomElement: HTMLElement;
     let styleManager: HomeAssistantStylesManager;
 
     let consoleWarningFn: jest.Mock;
@@ -70,15 +70,15 @@ describe('HomeAssistantStylesManager methods', () => {
             .spyOn(console, 'warn')
             .mockImplementation(consoleWarningFn);
         document.body.innerHTML = BASE_BODY;
-        myElement = document.querySelector('.my-element');
-        notMyElement = document.querySelector('.not-my-element');
+        myElement = document.querySelector('.my-element')!;
+        notMyElement = document.querySelector('.not-my-element')!;
         await customElements.whenDefined('my-custom-html-element')
             .then(() => {
-                myCustomElement = document.querySelector('my-custom-html-element');
+                myCustomElement = document.querySelector('my-custom-html-element')!;
             });
         await customElements.whenDefined('not-my-custom-html-element')
             .then(() => {
-                notMyCustomElement = document.querySelector('not-my-custom-html-element');
+                notMyCustomElement = document.querySelector('not-my-custom-html-element')!;
             });
         styleManager = new HomeAssistantStylesManager();
         styleManager.addStyle(
@@ -97,7 +97,7 @@ describe('HomeAssistantStylesManager methods', () => {
             `.custom-li {
                 background: blue;
             }`,
-            myCustomElement?.shadowRoot
+            myCustomElement.shadowRoot!
         );
     });
 
@@ -315,7 +315,7 @@ describe('HomeAssistantStylesManager methods', () => {
                 `.custom-li {
                     background: purple;
                 }`,
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {background: purple;}');
@@ -330,7 +330,7 @@ describe('HomeAssistantStylesManager methods', () => {
                     },
                     '.custom-li::after': false
                 },
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {text-align: right; --webkit-text-fill-color: red;}');
@@ -354,7 +354,7 @@ describe('HomeAssistantStylesManager methods', () => {
                         }
                     }
                 },
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen and (width >= 900px) {.custom-li {text-align: right; --webkit-text-fill-color: red;}}');
@@ -374,7 +374,7 @@ describe('HomeAssistantStylesManager methods', () => {
                         '.custom-li::after': false
                     }
                 ],
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('.custom-li {text-align: right; --webkit-text-fill-color: red;}');
@@ -402,7 +402,7 @@ describe('HomeAssistantStylesManager methods', () => {
                         }
                     }
                 ],
-                myCustomElement?.shadowRoot
+                myCustomElement.shadowRoot!
             );
             const styleElement = myCustomElement?.shadowRoot?.querySelector<HTMLStyleElement>('#ha-styles-manager_my-custom-html-element');
             expect(styleElement?.sheet?.cssRules[0].cssText).toBe('@media screen and (width >= 900px) {.custom-li {text-align: right; --webkit-text-fill-color: red;}}');
@@ -413,7 +413,7 @@ describe('HomeAssistantStylesManager methods', () => {
 
             styleManager.addStyle(
                 '.custom { display: none }',
-                document.querySelector('.non-existent')
+                document.querySelector('.non-existent')!
             );
 
             expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided calling "addStyle"');
@@ -436,8 +436,8 @@ describe('HomeAssistantStylesManager methods', () => {
 
         it('should return the correct element from a custom element shadowRoot', () => {
             const styleElement = myCustomElement?.shadowRoot?.querySelector('#ha-styles-manager_my-custom-html-element');
-            expect(styleManager.getStyleElement(myCustomElement?.shadowRoot)).toBeDefined();
-            expect(styleManager.getStyleElement(myCustomElement?.shadowRoot)).toBe(styleElement);
+            expect(styleManager.getStyleElement(myCustomElement.shadowRoot!)).toBeDefined();
+            expect(styleManager.getStyleElement(myCustomElement.shadowRoot!)).toBe(styleElement);
         });
 
         it('should return null if a regular HTML Element doesn\'t have a style created with the class', () => {
@@ -449,7 +449,7 @@ describe('HomeAssistantStylesManager methods', () => {
         });
 
         it('should return null if a custom element shadowRoot doesn\'t have a style created with the class', () => {
-            expect(styleManager.getStyleElement(notMyCustomElement?.shadowRoot)).toBeNull();
+            expect(styleManager.getStyleElement(notMyCustomElement.shadowRoot!)).toBeNull();
         });
 
     });
@@ -469,15 +469,15 @@ describe('HomeAssistantStylesManager methods', () => {
         });
 
         it('should remove the style from a custom element shadowRoot', () => {
-            styleManager.removeStyle(myCustomElement?.shadowRoot);
-            const styleElement = myCustomElement?.shadowRoot?.querySelector('#ha-styles-manager_my-custom-html-element');
+            styleManager.removeStyle(myCustomElement.shadowRoot!);
+            const styleElement = myCustomElement.shadowRoot!.querySelector('#ha-styles-manager_my-custom-html-element');
             expect(styleElement).toBeNull();
         });
 
         it('should throw a warning if it is used with a non-existent element', () => {
 
             styleManager.removeStyle(
-                document.querySelector('.non-existent')
+                document.querySelector('.non-existent')!
             );
 
             expect(consoleWarningFn).toHaveBeenCalledWith('home-assistant-styles-manager: no element has been provided calling "removeStyle"');

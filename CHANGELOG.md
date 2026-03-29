@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.1.0] - 2026-03-29
+
+- Migrated to `TypeScript 6`, so the target of the library is now `es6` instead of the previous `es5`
+- Some refactors have been needed to make the project compatible with `TypeScript 6` but they should not affect the functionality of the plugin
+
 ## [4.0.0] - 2026-03-28
 
 - `getCSSString` has been removed because it was redundant, `getCSSRulesString` can parse both, `CSS-in-JS` objects and regular rule objects
