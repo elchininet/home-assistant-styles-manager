@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.1.1] - 2026-04-05
+
+- Fix rules with false
+
 ## [4.1.0] - 2026-03-29
 
 - Migrated to `TypeScript 6`, so the target of the library is now `es6` instead of the previous `es5`
