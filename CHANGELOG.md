@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.1.2] - 2026-04-05
+
+- Fix rules names with false
+
 ## [4.1.1] - 2026-04-05
 
 - Fix rules with false

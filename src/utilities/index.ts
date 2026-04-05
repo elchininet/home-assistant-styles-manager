@@ -38,7 +38,7 @@ export const getCSSRulesString = (cssRulesInJs: CSSInJs | (string | CSSInJs)[]):
             if (typeof value === 'object') {
                 rules.push(`${prop}{${getCSSRulesString(value)}}`);
             } else if (value === false) {
-                rules.push(`${toKebabCase(prop)}{display: none !important}`);
+                rules.push(`${prop}{display: none !important}`);
             } else {
                 declarations.push(`${toKebabCase(prop)}:${value}`);
             }
