@@ -53,7 +53,7 @@
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/eslint": "^9.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.8.0",
+    "@types/node": "^25.9.1",
     "eslint": "^10.4.0",
     "eslint-plugin-jest": "^29.15.2",
     "globals": "^17.6.0",
@@ -62,10 +62,10 @@
     "rollup": "4.60.4",
     "rollup-plugin-dts": "^6.4.1",
     "rollup-plugin-tsconfig-paths": "^1.5.2",
-    "ts-jest": "^29.4.9",
+    "ts-jest": "^29.4.11",
     "tslib": "^2.8.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.3"
+    "typescript-eslint": "^8.59.4"
   },
   "pnpm": {
     "overrides": {
