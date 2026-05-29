@@ -1,0 +1,6 @@
+allowBuilds:
+  unrs-resolver: false
+minimumReleaseAgeExclude:
+  - ws@8.20.1
+overrides:
+  ws@>=8.0.0 <8.20.1: ^8.20.1
