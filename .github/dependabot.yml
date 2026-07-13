@@ -11,6 +11,9 @@ updates:
       default-days: 1
     commit-message:
       prefix: "[Dependencies]"
+    ignore:
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     groups:
       dependencies-dev:
         dependency-type: "development"
