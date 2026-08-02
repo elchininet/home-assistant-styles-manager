@@ -11,6 +11,7 @@
     "javascript-library",
     "library"
   ],
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
@@ -36,7 +37,7 @@
     "url": "git+https://github.com/elchininet/home-assistant-styles-manager"
   },
   "scripts": {
-    "build": "pnpm clean && rollup --config rollup.config.js --bundleConfigAsCjs",
+    "build": "pnpm clean && rollup --config rollup.config.mjs",
     "clean": "rm -rf dist",
     "test:ts": "tsc --noEmit",
     "test:lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
